@@ -21,39 +21,42 @@ These materials are a **living draft** — actively being written, revised, and 
 
 ---
 
-This book is the readable companion to **OPIM 3510: Introduction to Data Science**, a
-hands-on undergraduate course taught in **Python** with **Google Colab**. Each chapter
-follows a run of the course; each section is a lecture, paired with the code Dr. Wanik
-demonstrated live. The narrative is built from the lecture video transcripts, lightly
-edited for reading.
+This book is the readable companion to **OPIM 3510: Business Data Analytics I (BDA1)**, a
+hands-on undergraduate course taught in **Python** with **Google Colab**. The goal isn't
+modeling — it's to make you **data-competent**: able to read and merge data, describe it
+quantitatively, run applied statistics, make beautiful maps and plots, and forecast time
+series. Each chapter follows a run of the course; each section is a lecture, paired with
+the code Dr. Wanik demonstrated live. The narrative is built from the lecture video
+transcripts, lightly edited for reading.
 
 > **Taught entirely in Python via Google Colab** — every notebook referenced here is one
 > you can open and run for free.
 
 ## About the course
 - **Instructor:** Dave Wanik (dave.wanik@uconn.edu)
-- **Format:** Hands-on, code-along · data science end-to-end
-- **Description:** From Python basics through the full **machine-learning recipe** —
-  exploratory data analysis, regression, classification, model interpretation, and an
-  introduction to **text analytics / NLP**.
+- **Format:** Hands-on, code-along · descriptive data science end-to-end
+- **Description:** From Python basics through **applied statistics** (sampling, the CLT,
+  confidence intervals), **data wrangling** (merge/join/concat and business queries),
+  **geospatial mapping**, and **time-series forecasting** (exponential smoothing, moving
+  averages) — capped with a taste of **algorithmic trading** and a teaser for modeling.
 
 ### Learning objectives
 By the end of the course you should be able to:
-1. Write practical **Python** and wrangle tabular data with **pandas**
-2. Perform a structured **exploratory data analysis (EDA)**
-3. Fit and evaluate **regression** and **classification** models with scikit-learn
-4. Interpret models with metrics, the confusion matrix, and **permutation importance**
-5. Engineer features from **text** (bag-of-words, TF-IDF) and build NLP models
+1. Write practical **Python** (for loops, NumPy, distributions) and wrangle tabular data with **pandas**
+2. Reason with **applied statistics** — sampling distributions, the CLT, and confidence intervals
+3. Combine data sources with **merge / join / concat** and answer business questions with logicals
+4. Build maps with **GeoPandas** — geocoding, spatial joins, and joining CSVs/census data to shapefiles
+5. Forecast **time series** with exponential smoothing and moving averages, and evaluate a forecast honestly
 
 ## How the book is organized
 | Ch. | Theme |
 |---|---|
-| 1 | Foundations — what data science is, and Python basics |
-| 2 | pandas, Data Wrangling & EDA |
-| 3 | The Machine-Learning Recipe: Regression |
-| 4 | Classification |
-| 5 | Advanced Wrangling & Model Interpretation |
-| 6 | Text Analytics & NLP |
+| 1 | Foundations — Python, for loops & distributions |
+| 2 | Applied Statistics — sampling, the CLT & confidence intervals |
+| 3 | Data Wrangling — merge, joins, concat & business queries |
+| 4 | Geospatial Data & Mapping |
+| 5 | Time Series & Forecasting — exponential smoothing |
+| 6 | Moving Averages & Algorithmic Trading |
 
 ---
 
