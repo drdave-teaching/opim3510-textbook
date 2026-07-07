@@ -1,0 +1,9 @@
+format: jb-book
+root: index
+chapters:
+  - file: module-1-foundations-python
+  - file: module-2-pandas-eda
+  - file: module-3-ml-regression
+  - file: module-4-classification
+  - file: module-5-wrangling-interpretation
+  - file: module-6-text-analytics
