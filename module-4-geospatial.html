@@ -1,0 +1,590 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Chapter 4 — Geospatial Data &amp; Mapping &#8212; Business Data Analytics I</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'module-4-geospatial';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 5 — Time Series &amp; Forecasting: Exponential Smoothing" href="module-5-time-series.html" />
+    <link rel="prev" title="Chapter 3 — Data Wrangling: Merge, Joins, Concat &amp; Queries" href="module-3-merge-joins.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">📈 <strong>OPIM 3510 · Business Data Analytics I</strong> — draft course companion (work in progress)</div>
+</aside>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Business Data Analytics I</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="module-1-foundations.html">Chapter 1 — Foundations: Python, For Loops &amp; Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-2-applied-statistics.html">Chapter 2 — Applied Statistics: Sampling, CLT &amp; Confidence Intervals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-3-merge-joins.html">Chapter 3 — Data Wrangling: Merge, Joins, Concat &amp; Queries</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 4 — Geospatial Data &amp; Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-5-time-series.html">Chapter 5 — Time Series &amp; Forecasting: Exponential Smoothing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-6-moving-averages.html">Chapter 6 — Moving Averages &amp; Algorithmic Trading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/module-4-geospatial.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Chapter 4 — Geospatial Data & Mapping</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geospatial-data-types">4.1 Geospatial data types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#making-maps-with-polygon-shapefiles">4.2 Making maps with polygon shapefiles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#point-data-lat-lon-geocoding">4.3 Point data, lat/lon &amp; geocoding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-the-house-sales">4.4 Mapping the house sales</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-spatial-join">4.5 The spatial join</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joining-csvs-to-shapefiles-ct-maps">4.6 Joining CSVs to shapefiles (CT maps)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enriching-house-sales-with-census-attributes">4.7 Enriching house sales with census attributes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resampling-zip-codes-to-town-resolution">4.8 Resampling zip codes to town resolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-4-geospatial-data-mapping">
+<h1>Chapter 4 — Geospatial Data &amp; Mapping<a class="headerlink" href="#chapter-4-geospatial-data-mapping" title="Link to this heading">#</a></h1>
+<p>Now for something that will genuinely differentiate you in the job market. Most business students can wrangle spreadsheets but <strong>can’t make a map</strong> — and when your data has a spatial component, that’s a real gap. This chapter is a crash course in <strong>spatial analytics with Python</strong>: the data types (vector vs. raster), <strong>making maps</strong> from shapefiles with <strong>GeoPandas</strong>, <strong>geocoding</strong> addresses to points, the <strong>spatial join</strong> (enrich points with a polygon’s attributes — no key needed), joining CSVs to shapefiles, pulling <strong>census data</strong> by zip code, and <strong>resampling</strong> high-resolution data to a coarser one. You won’t be a GIS expert in two weeks, but you’ll ask the right questions and build maps that tell a story.</p>
+<section id="geospatial-data-types">
+<h2>4.1 Geospatial data types<a class="headerlink" href="#geospatial-data-types" title="Link to this heading">#</a></h2>
+<p>Two kinds of spatial data:</p>
+<ul class="simple">
+<li><p><strong>Vector</strong> — <strong>points</strong> (airport/Uber-pickup locations), <strong>lines</strong> (roads, town boundaries, power lines), and <strong>polygons</strong> (town/zip/census areas you can aggregate over). We use vector data throughout.</p></li>
+<li><p><strong>Raster</strong> — continuous <strong>gridded</strong> data like satellite imagery (elevation, wildfire, crop health via red/green band math). We won’t use it much, but know it exists.</p></li>
+</ul>
+<p>You locate things with <strong>latitude</strong> (horizontal belts; positive North) and <strong>longitude</strong> (pole-to-pole; negative West of England) — Hartford is ~41.7°N, −72.7°W. Because Earth is a sphere (an oblate spheroid) squashed onto a flat map, the <strong>projection / coordinate reference system (CRS)</strong> matters: Mercator distorts sizes (compare Africa across projections), and projected units are <strong>feet or meters</strong> — essential for <strong>distance</strong> calculations, since a degree of lat/lon isn’t a constant distance (bigger at the equator, smaller at the poles). A shapefile is basically a <strong>CSV with a <code class="docutils literal notranslate"><span class="pre">geometry</span></code> column</strong> — its <strong>attribute table</strong> has one row per map feature (CT has 169 towns but ~800 polygons because of coastal <strong>islands</strong>). Spatial operations include <strong>clip</strong> (constrain to a study area), <strong>buffer</strong> (a zone around a feature), and the <strong>spatial join</strong> (drop a point on a polygon and inherit its attributes).</p>
+</section>
+<section id="making-maps-with-polygon-shapefiles">
+<h2>4.2 Making maps with polygon shapefiles<a class="headerlink" href="#making-maps-with-polygon-shapefiles" title="Link to this heading">#</a></h2>
+<p>Mind <strong>spatial resolution</strong> — high (neighborhood) vs. low (state); they can feel backwards. Get free CT/US data from CT DEEP’s GIS site (states, zip codes, town boundaries). A <strong>shapefile</strong> is many files together (<code class="docutils literal notranslate"><span class="pre">.shp</span></code>, <code class="docutils literal notranslate"><span class="pre">.dbf</span></code>, <code class="docutils literal notranslate"><span class="pre">.prj</span></code>, <code class="docutils literal notranslate"><span class="pre">.shx</span></code>, …) — all needed. Read it with <strong>GeoPandas</strong>: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">geopandas</span> <span class="pre">as</span> <span class="pre">gpd;</span> <span class="pre">gdf</span> <span class="pre">=</span> <span class="pre">gpd.read_file(&quot;states.shp&quot;)</span></code> — like pandas but <strong><code class="docutils literal notranslate"><span class="pre">read_file</span></code></strong> instead of <code class="docutils literal notranslate"><span class="pre">read_csv</span></code>, and a <strong><code class="docutils literal notranslate"><span class="pre">geometry</span></code></strong> column tells the computer how to draw each feature. The US states file has <strong>56</strong> rows (50 + DC + territories) × 15 columns. Then <strong><code class="docutils literal notranslate"><span class="pre">.plot()</span></code></strong> draws the map (axes are lon/lat), and <strong><code class="docutils literal notranslate"><span class="pre">column=&quot;land_area&quot;</span></code></strong> or <strong><code class="docutils literal notranslate"><span class="pre">column=&quot;region&quot;,</span> <span class="pre">legend=True</span></code></strong> colors it by an attribute (customize with <code class="docutils literal notranslate"><span class="pre">cmap</span></code>, <code class="docutils literal notranslate"><span class="pre">legend_kwds</span></code>). A <code class="docutils literal notranslate"><span class="pre">for</span></code> loop over polygon centroids can label each state — a real map that would take hours in raw Matplotlib.</p>
+</section>
+<section id="point-data-lat-lon-geocoding">
+<h2>4.3 Point data, lat/lon &amp; geocoding<a class="headerlink" href="#point-data-lat-lon-geocoding" title="Link to this heading">#</a></h2>
+<p>Not all data is polygons — sometimes it’s <strong>points</strong>. Take CT <strong>house-sales</strong> data (145k rows: address, town, assessed value, sale amount, sales ratio, property type). With only an address you could parse out a town/zip for a join — but a <strong>spatial join</strong> is better: <strong>no formal primary key needed, because the lat/lon <em>is</em> the key</strong>. First <strong>geocode</strong>: turn an address string into a lat/lon point. Build a full address by pasting <code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">+</span> <span class="pre">&quot;</span> <span class="pre">&quot;</span> <span class="pre">+</span> <span class="pre">town</span> <span class="pre">+</span> <span class="pre">&quot;</span> <span class="pre">CT&quot;</span></code>, then loop each row through a geocoder (<strong>GeoPy</strong>, or an alternative) to get coordinates. Geocoding is slow, so it’s pre-canned here — read the resulting <code class="docutils literal notranslate"><span class="pre">lat_long_real_estate</span></code> file and you have coordinates for every house (so you can map them).</p>
+</section>
+<section id="mapping-the-house-sales">
+<h2>4.4 Mapping the house sales<a class="headerlink" href="#mapping-the-house-sales" title="Link to this heading">#</a></h2>
+<p>Even before making it a geo-object, <strong><code class="docutils literal notranslate"><span class="pre">folium</span></code></strong> renders an interactive HTML map inline (centered on CT’s centroid). The geocoder isn’t perfect (a few CT sales land in Canada — you could add logic: if the address says CT but the point is outside CT, drop it). Convert the DataFrame to a <strong>GeoDataFrame</strong> with a CRS — <strong>EPSG 4326</strong> (WGS84, the GPS standard) for point/lat-lon data. For an intro class, the key is just getting the <strong>longitude/latitude columns named and ordered correctly</strong>. Then read the <strong>zip-code shapefile</strong> (ZCTA, the whole US), and subset <strong>Connecticut</strong> by keeping ZCTA IDs that <strong>start with “06”</strong> (<code class="docutils literal notranslate"><span class="pre">.str.startswith(&quot;06&quot;)</span></code>) → 283 zip polygons (higher resolution than 169 towns).</p>
+</section>
+<section id="the-spatial-join">
+<h2>4.5 The spatial join<a class="headerlink" href="#the-spatial-join" title="Link to this heading">#</a></h2>
+<p>The payoff. Your house points are CRS <strong>4326</strong> (WGS84); the CT zip polygons are <strong>4269</strong> (NAD83) — two different projections. <strong>You cannot do a spatial operation across different CRSs</strong>, so convert one: <code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">=</span> <span class="pre">df.to_crs(4269)</span></code>. Then <strong><code class="docutils literal notranslate"><span class="pre">gpd.sjoin(points,</span> <span class="pre">polygons,</span> <span class="pre">how=&quot;inner&quot;,</span> <span class="pre">predicate=&quot;intersects&quot;)</span></code></strong> (note: <code class="docutils literal notranslate"><span class="pre">op</span></code> is deprecated → <code class="docutils literal notranslate"><span class="pre">predicate</span></code>) drops each point onto the polygon it falls in and <strong>attaches all the polygon’s attributes</strong> — instantly enriching every house with its zip code, land/water area, etc. Overlay for a great map: plot the polygons first, capture the <code class="docutils literal notranslate"><span class="pre">ax</span></code>, then plot the points on top of that same axis, and color the points by sale amount (use <code class="docutils literal notranslate"><span class="pre">log</span></code> to tame outliers) or property type (cast the column to <strong>string</strong> so the legend renders as categories).</p>
+</section>
+<section id="joining-csvs-to-shapefiles-ct-maps">
+<h2>4.6 Joining CSVs to shapefiles (CT maps)<a class="headerlink" href="#joining-csvs-to-shapefiles-ct-maps" title="Link to this heading">#</a></h2>
+<p>Shapefiles carry limited attributes, so — just like enriching data in Chapter 3 — <strong>join a CSV to a shapefile</strong> on a primary key, then map it. Read the <strong>CT towns</strong> shapefile (1,780 polygons; axes in the <strong>hundreds of thousands</strong> because it’s a <strong>projected</strong> CRS in <strong>feet</strong>, not lat/lon). Subset CT land (<code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">==</span> <span class="pre">&quot;CT&quot;</span></code> and not water). Then <code class="docutils literal notranslate"><span class="pre">pd.merge</span></code> a “children by family type” CSV onto the towns on the town-name key, and <strong>convert the result back to a GeoDataFrame</strong> via its <code class="docutils literal notranslate"><span class="pre">geometry</span></code> column. Subset to one year/family-type → 783 rows (169 towns + ~500 coastal islands; Branford alone has 154 tiny islands). Map a column (e.g. married couples with children under 18) — optionally normalized by population. The pattern is a <strong>nested join</strong>: <code class="docutils literal notranslate"><span class="pre">pd.merge</span></code> (left/right keys) → <code class="docutils literal notranslate"><span class="pre">gpd.GeoDataFrame(...,</span> <span class="pre">geometry=...)</span></code>. Keep track of left/right keys and it’s not scary.</p>
+</section>
+<section id="enriching-house-sales-with-census-attributes">
+<h2>4.7 Enriching house sales with census attributes<a class="headerlink" href="#enriching-house-sales-with-census-attributes" title="Link to this heading">#</a></h2>
+<p>The scale play: if you can attach a <strong>zip code</strong> to any point data, you unlock <strong>hundreds of census variables</strong> per zip. Grab the “census summaries by zip code” files (economics ~225, housing ~255, social ~252, rural/urban ~6 columns; ~33,000 zips = all US zip codes). Fix the classic bug: zip codes stored as <strong>integers lose their leading zero</strong>, so <strong><code class="docutils literal notranslate"><span class="pre">df[&quot;zip&quot;].astype(str).str.zfill(5)</span></code></strong> pads them back. Join the four datasets on the zip key (a <code class="docutils literal notranslate"><span class="pre">functools.reduce</span></code>/lambda one-liner) → a <strong>735-column master table</strong> (225+255+252+6 − 3 duplicate keys). Join <em>that</em> to the geocoded house points on the zip → house prices now carry <strong>768 columns</strong> of census context (employment, marriage, kids, school quality) — “solid gold” for explaining <em>why</em> a house sold for its price. Finish with <strong>AutoEDA</strong> (<code class="docutils literal notranslate"><span class="pre">sweetviz</span></code>) to auto-profile everything against sale amount.</p>
+</section>
+<section id="resampling-zip-codes-to-town-resolution">
+<h2>4.8 Resampling zip codes to town resolution<a class="headerlink" href="#resampling-zip-codes-to-town-resolution" title="Link to this heading">#</a></h2>
+<p>Finally, go the other way — <strong>resample</strong> high-resolution data to a coarser unit. Load the zip-code and town shapefiles (again, <code class="docutils literal notranslate"><span class="pre">to_crs</span></code> so both share one CRS — non-negotiable). Join an economics CSV to the zips (<code class="docutils literal notranslate"><span class="pre">.str.zfill(5)</span></code>), map poverty rate nationwide (pockets in Appalachia, the South), then CT (Hartford, Bridgeport, Waterbury, eastern CT). To push zip data down to <strong>towns</strong>: <strong><code class="docutils literal notranslate"><span class="pre">gpd.sjoin</span></code></strong> towns↔zips on <code class="docutils literal notranslate"><span class="pre">intersects</span></code> (→ 1,921 town-zip fragments, since boundaries split), compute an <strong>area-weighted</strong> value (<code class="docutils literal notranslate"><span class="pre">land_area</span> <span class="pre">×</span> <span class="pre">poverty_rate</span></code>), <strong>aggregate by town</strong> (a weighted average), join back, and map the <strong>weighted poverty rate per town</strong>. That’s the essence of resampling between spatial scales — area-weighted, a few lines of code.</p>
+<p><strong>Crash course complete:</strong> vector data (points/lines/polygons), reading shapefiles and making colored maps, geocoding addresses to points, spatial joins to enrich points from polygons, joining CSVs and census data, and resampling across resolutions. You can now make your own maps and say something interesting about spatial patterns in Connecticut.</p>
+<div class="seealso dropdown admonition">
+<p class="admonition-title">🔗 Notebooks for this chapter</p>
+<ul class="simple">
+<li><p><strong>Intro to geospatial data types</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/2_Intro%20to%20Geospatial%20Data%20Types.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/2_Intro%20to%20Geospatial%20Data%20Types.ipynb">GitHub</a></p></li>
+<li><p><strong>Making maps with polygons</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/3_Intro%20to%20Making%20Maps_Polygons.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/3_Intro%20to%20Making%20Maps_Polygons.ipynb">GitHub</a></p></li>
+<li><p><strong>Geocoding &amp; spatial joins</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/1_Geocoding%20and%20Spatial%20Joins.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/1_Geocoding%20and%20Spatial%20Joins.ipynb">GitHub</a></p></li>
+<li><p><strong>CT data joining &amp; maps</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/4_CT_Data_Joining_Maps.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/4_CT_Data_Joining_Maps.ipynb">GitHub</a></p></li>
+<li><p><strong>Census data enrichment</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/2_Data%20Enrichment.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/2_Data%20Enrichment.ipynb">GitHub</a></p></li>
+<li><p><strong>Resampling zip codes to towns</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/3_ResamplingZipcodes_to_Towns.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/3_ResamplingZipcodes_to_Towns.ipynb">GitHub</a></p></li>
+</ul>
+<p><em>Exercises, assignments &amp; extras:</em></p>
+<ul class="simple">
+<li><p><strong>Centroids</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/Centroids.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/Centroids.ipynb">GitHub</a></p></li>
+<li><p><strong>Advanced — spatial analytics &amp; GeoPandas</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/obs/4_advanced_Spatial%20Analytics%20and%20Geopandas.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/obs/4_advanced_Spatial%20Analytics%20and%20Geopandas.ipynb">GitHub</a></p></li>
+<li><p><strong>Project 3 — instructions</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/4_Putting_It_Together/Project3_Instructions.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/4_Putting_It_Together/Project3_Instructions.ipynb">GitHub</a></p></li>
+</ul>
+</div>
+</section>
+<section id="lecture-key-points">
+<h2>📌 Lecture key points<a class="headerlink" href="#lecture-key-points" title="Link to this heading">#</a></h2>
+<p><em>Distilled takeaways from the video lectures behind this chapter — click each to expand.</em></p>
+<div class="note dropdown admonition">
+<p class="admonition-title">Intro to Geospatial Data Types</p>
+<ul class="simple">
+<li><p><strong>Vector</strong> = points/lines/polygons; <strong>raster</strong> = gridded imagery (elevation, crops); we use vector.</p></li>
+<li><p>Locate with <strong>latitude/longitude</strong> (positive N, negative W of England); Earth is a sphere → <strong>projection/CRS</strong> matters.</p></li>
+<li><p><strong>Projected units</strong> are feet/meters (needed for distance); a degree of lat/lon isn’t a constant distance.</p></li>
+<li><p>A shapefile = a table with a <strong><code class="docutils literal notranslate"><span class="pre">geometry</span></code></strong> column; ops include <strong>clip</strong>, <strong>buffer</strong>, and the <strong>spatial join</strong>.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Intro to Making Maps with Polygon Shapefiles</p>
+<ul class="simple">
+<li><p>Read shapefiles with <strong>GeoPandas</strong> (<code class="docutils literal notranslate"><span class="pre">gpd.read_file</span></code>) — like pandas but with a <strong><code class="docutils literal notranslate"><span class="pre">geometry</span></code></strong> column.</p></li>
+<li><p>A shapefile is many files (<code class="docutils literal notranslate"><span class="pre">.shp</span></code>, <code class="docutils literal notranslate"><span class="pre">.dbf</span></code>, <code class="docutils literal notranslate"><span class="pre">.prj</span></code>, <code class="docutils literal notranslate"><span class="pre">.shx</span></code>…) — all required.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">.plot(column=...,</span> <span class="pre">legend=True,</span> <span class="pre">cmap=...)</span></code></strong> colors the map by an attribute.</p></li>
+<li><p>Mind <strong>spatial resolution</strong>; CT has 169 towns but ~800 polygons (coastal islands).</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Introduction to point data, lat/lon and address geocoding</p>
+<ul class="simple">
+<li><p><strong>Point data</strong> (house sales) vs. polygons; the <strong>lat/lon is the key</strong> — no formal primary key needed for a spatial join.</p></li>
+<li><p><strong>Geocode</strong>: turn an address string (<code class="docutils literal notranslate"><span class="pre">address</span> <span class="pre">+</span> <span class="pre">town</span> <span class="pre">+</span> <span class="pre">&quot;CT&quot;</span></code>) into lat/lon with <strong>GeoPy</strong> (or an alternative).</p></li>
+<li><p>Geocoding is slow — loop each row; here it’s pre-canned into a lat/long file.</p></li>
+<li><p>With coordinates, you can map every point.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Making a map of house sales (downloading zip shapefile)</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">folium</span></code></strong> renders an interactive HTML map inline (watch for geocoder errors landing outside CT).</p></li>
+<li><p>Convert to a <strong>GeoDataFrame</strong> with CRS <strong>EPSG 4326</strong> (WGS84, GPS); get the <strong>lon/lat columns named/ordered</strong> right.</p></li>
+<li><p>Read the US <strong>ZCTA</strong> zip shapefile; subset CT with IDs that <strong>start with “06”</strong> → 283 zips.</p></li>
+<li><p>Zip codes are higher resolution than the 169 towns.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Performing the spatial join, making maps</p>
+<ul class="simple">
+<li><p><strong>CRSs must match</strong> — house points are 4326 (WGS84), CT zips are 4269 (NAD83); <code class="docutils literal notranslate"><span class="pre">to_crs(4269)</span></code> first.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">gpd.sjoin(points,</span> <span class="pre">polygons,</span> <span class="pre">how=&quot;inner&quot;,</span> <span class="pre">predicate=&quot;intersects&quot;)</span></code></strong> attaches polygon attributes to each point.</p></li>
+<li><p>Overlay: plot polygons, capture <code class="docutils literal notranslate"><span class="pre">ax</span></code>, plot points on top; color by sale amount (<code class="docutils literal notranslate"><span class="pre">log</span></code> for outliers).</p></li>
+<li><p>Cast categorical columns to <strong>string</strong> so the legend renders as categories.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">CT Data Joining and Maps</p>
+<ul class="simple">
+<li><p>Shapefiles have limited attributes — <strong><code class="docutils literal notranslate"><span class="pre">pd.merge</span></code> a CSV</strong> onto them by primary key, then remap.</p></li>
+<li><p>Convert the merged result back to a <strong>GeoDataFrame</strong> via its <code class="docutils literal notranslate"><span class="pre">geometry</span></code> column (a nested join).</p></li>
+<li><p>CT towns are in a <strong>projected</strong> CRS (units in <strong>feet</strong>); 783 polygons = 169 towns + coastal islands.</p></li>
+<li><p>Map any joined column (e.g. families with children), optionally normalized by population.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Enriching the house sales data with census attributes</p>
+<ul class="simple">
+<li><p>Attach a <strong>zip code</strong> to point data to unlock <strong>hundreds of census variables</strong> (~33,000 US zips).</p></li>
+<li><p>Fix the leading-zero bug: <strong><code class="docutils literal notranslate"><span class="pre">.astype(str).str.zfill(5)</span></code></strong> (zips stored as ints lose the leading 0).</p></li>
+<li><p>Join four census files → a <strong>735-column</strong> master table; join to house points → 768 columns of context.</p></li>
+<li><p>Profile it fast with <strong>AutoEDA</strong> (<code class="docutils literal notranslate"><span class="pre">sweetviz</span></code>) against sale amount.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Advanced: resampling zipcode data to town data</p>
+<ul class="simple">
+<li><p>Resample high→low resolution; <strong>both layers must share a CRS</strong> (<code class="docutils literal notranslate"><span class="pre">to_crs</span></code>).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">gpd.sjoin</span></code></strong> towns↔zips on <code class="docutils literal notranslate"><span class="pre">intersects</span></code> → fragments where boundaries split.</p></li>
+<li><p>Compute an <strong>area-weighted</strong> value (<code class="docutils literal notranslate"><span class="pre">land_area</span> <span class="pre">×</span> <span class="pre">rate</span></code>) and <strong>aggregate by town</strong> (weighted average).</p></li>
+<li><p>Join back and map the weighted rate per town — resampling in a few lines.</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="module-3-merge-joins.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Chapter 3 — Data Wrangling: Merge, Joins, Concat &amp; Queries</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="module-5-time-series.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Chapter 5 — Time Series &amp; Forecasting: Exponential Smoothing</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geospatial-data-types">4.1 Geospatial data types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#making-maps-with-polygon-shapefiles">4.2 Making maps with polygon shapefiles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#point-data-lat-lon-geocoding">4.3 Point data, lat/lon &amp; geocoding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-the-house-sales">4.4 Mapping the house sales</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-spatial-join">4.5 The spatial join</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joining-csvs-to-shapefiles-ct-maps">4.6 Joining CSVs to shapefiles (CT maps)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enriching-house-sales-with-census-attributes">4.7 Enriching house sales with census attributes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resampling-zip-codes-to-town-resolution">4.8 Resampling zip codes to town resolution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr. Dave Wanik · University of Connecticut (OPIM 3510)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

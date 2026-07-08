@@ -1,0 +1,532 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Chapter 1 — Foundations: Python, For Loops &amp; Distributions &#8212; Business Data Analytics I</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'module-1-foundations';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 2 — Applied Statistics: Sampling, CLT &amp; Confidence Intervals" href="module-2-applied-statistics.html" />
+    <link rel="prev" title="Business Data Analytics I" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">📈 <strong>OPIM 3510 · Business Data Analytics I</strong> — draft course companion (work in progress)</div>
+</aside>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Business Data Analytics I</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 1 — Foundations: Python, For Loops &amp; Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-2-applied-statistics.html">Chapter 2 — Applied Statistics: Sampling, CLT &amp; Confidence Intervals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-3-merge-joins.html">Chapter 3 — Data Wrangling: Merge, Joins, Concat &amp; Queries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-4-geospatial.html">Chapter 4 — Geospatial Data &amp; Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-5-time-series.html">Chapter 5 — Time Series &amp; Forecasting: Exponential Smoothing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-6-moving-averages.html">Chapter 6 — Moving Averages &amp; Algorithmic Trading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/module-1-foundations.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Chapter 1 — Foundations: Python, For Loops & Distributions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#welcome">1.1 Welcome</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distributions">1.2 Distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-loops">1.3 For loops</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-common-distributions">1.4 Other common distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-1-foundations-python-for-loops-distributions">
+<h1>Chapter 1 — Foundations: Python, For Loops &amp; Distributions<a class="headerlink" href="#chapter-1-foundations-python-for-loops-distributions" title="Link to this heading">#</a></h1>
+<p>Welcome to <strong>OPIM 3510 — Business Data Analytics I (BDA1)</strong>, your solid data course. The goal isn’t just modeling — it’s to make you <strong>data-competent</strong>: able to read data, merge files, describe data quantitatively, make beautiful plots and tables, and run statistics to say whether things are <em>different</em> or not. This chapter lays the groundwork: the <strong><code class="docutils literal notranslate"><span class="pre">for</span></code> loop</strong> (the control-flow workhorse), and <strong>distributions</strong> (the language of applied statistics) — both of which we’ll need immediately for the Central Limit Theorem in Chapter 2.</p>
+<section id="welcome">
+<h2>1.1 Welcome<a class="headerlink" href="#welcome" title="Link to this heading">#</a></h2>
+<p>Dr. Dave Wanik — professor in Operations &amp; Information Management and academic director for Business Data Analytics — built this course from the bottom up to make you comfortable <em>with data</em>: reading it, merging it, summarizing it, visualizing it, and reasoning about it statistically. Basic modeling is here too, but competence with data is the point.</p>
+</section>
+<section id="distributions">
+<h2>1.2 Distributions<a class="headerlink" href="#distributions" title="Link to this heading">#</a></h2>
+<p>A <strong>distribution</strong> is just a collection of numbers. You know the <strong>normal</strong> (bell curve), but heights, weights, salaries, and vote shares all follow distributions. Two broad kinds: <strong>continuous</strong> (any real value, e.g. 0.5739) and <strong>discrete</strong> (integers: 0, 1, 2, 3 — count data). We describe any distribution — whatever its shape — with <strong>percentiles</strong>: the <em>10th percentile</em> is the point at or below which 10% of values fall (e.g. “10% of people make $50k or less”), which captures both the <strong>center</strong> and the <strong>tails</strong>.</p>
+<p>Generate one with <strong><code class="docutils literal notranslate"><span class="pre">np.random.normal(loc,</span> <span class="pre">scale,</span> <span class="pre">size)</span></code></strong> — <code class="docutils literal notranslate"><span class="pre">loc</span></code> = mean, <code class="docutils literal notranslate"><span class="pre">scale</span></code> = standard deviation (mind the keyword names; and beware <strong>positional-argument order</strong> — <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">20,</span> <span class="pre">100)</span></code> means mean 3, sd 20, size 100, a classic newbie bug). The default is the <strong>standard normal</strong> (mean 0, sd 1). The <strong>empirical rule</strong> governs the normal: ~<strong>68%</strong> of values within ±1 sd, ~<strong>95%</strong> within ±2 sd, ~<strong>99.7%</strong> within ±3 sd — so for mean 100, sd 20, values between 80–120 are common and anything below 40 or above 160 is very rare. Draw 10,000 samples and the histogram <em>is</em> a bell curve. (Foreshadowing: the <strong>means</strong> of samples drawn from <em>any</em> distribution are themselves normally distributed — the Central Limit Theorem, next chapter.)</p>
+</section>
+<section id="for-loops">
+<h2>1.3 For loops<a class="headerlink" href="#for-loops" title="Link to this heading">#</a></h2>
+<p>We’re building to the CLT, where we’ll <strong>draw samples one at a time, compute their means, and store them</strong> — that needs a <strong><code class="docutils literal notranslate"><span class="pre">for</span></code> loop</strong>. The loop iterates a set number of operations (same idea in Python, R, C, Java). Two forms:</p>
+<ul class="simple">
+<li><p><strong>Over a list:</strong> <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">my_list:</span> <span class="pre">print(i)</span></code> walks each element.</p></li>
+<li><p><strong>Over a range:</strong> <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">np.arange(low,</span> <span class="pre">high,</span> <span class="pre">step)</span></code> — <code class="docutils literal notranslate"><span class="pre">arange</span></code> is <em>low, high (excluded), step</em>, so <code class="docutils literal notranslate"><span class="pre">np.arange(0,</span> <span class="pre">5,</span> <span class="pre">1)</span></code> → 0,1,2,3,4.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">for</span></code> is a <strong>reserved word</strong> (shown in purple) — you can’t name a variable <code class="docutils literal notranslate"><span class="pre">for</span></code>, but the loop variable can be anything (<code class="docutils literal notranslate"><span class="pre">i</span></code>, <code class="docutils literal notranslate"><span class="pre">j</span></code>, <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">cat</span></code>); <code class="docutils literal notranslate"><span class="pre">i</span></code>/<code class="docutils literal notranslate"><span class="pre">j</span></code> are conventional (they once meant rows/columns). A powerful pattern is <strong>initialize a variable and reuse it in the loop</strong> — e.g. <strong>compound interest</strong>: start with $100, and each year <code class="docutils literal notranslate"><span class="pre">current</span> <span class="pre">=</span> <span class="pre">current</span> <span class="pre">*</span> <span class="pre">1.05</span></code>; after 5 years it’s $127.63, because interest earns interest. A <strong>nested for loop</strong> (an inner loop completing for each outer step) lets you iterate over two things at once — useful, if a bit advanced.</p>
+</section>
+<section id="other-common-distributions">
+<h2>1.4 Other common distributions<a class="headerlink" href="#other-common-distributions" title="Link to this heading">#</a></h2>
+<p>Beyond the normal (a <strong>parametric</strong> distribution set by mean + sd), a few more you’ll use:</p>
+<ul class="simple">
+<li><p><strong>Triangular</strong> — <code class="docutils literal notranslate"><span class="pre">np.random.triangular(left,</span> <span class="pre">mode,</span> <span class="pre">right)</span></code>: <strong>censored</strong> at hard left/right limits (no values beyond them), which makes it great for business “sensor”-style problems where extremes are impossible.</p></li>
+<li><p><strong>Uniform (continuous)</strong> — <code class="docutils literal notranslate"><span class="pre">np.random.uniform(low,</span> <span class="pre">high)</span></code>: every value between the bounds is equally likely (a rectangle); <strong>uniform integer</strong> is <code class="docutils literal notranslate"><span class="pre">np.random.randint</span></code>.</p></li>
+<li><p><strong>Binomial</strong> — <code class="docutils literal notranslate"><span class="pre">np.random.binomial(n,</span> <span class="pre">p,</span> <span class="pre">size)</span></code>: the coin-flip distribution. Flip a fair coin (p=0.5) 50 times (n=50) and you <em>expect</em> ~25 heads, but 23/26/30 happen; repeat the experiment <code class="docutils literal notranslate"><span class="pre">size</span></code> times to see the distribution. (Discrete → think count data.)</p></li>
+</ul>
+<p>Finally, <strong>PDF vs. CDF</strong>. The <strong>PDF</strong> (what a KDE/histogram shows) is the <em>shape</em> — you can see it’s normal, but the y-axis is frequency, so you can’t read “P(≤ 104)”. The <strong>CDF</strong> (cumulative) plots the <strong>percentile</strong> on the y-axis, so you <em>can</em>: “90% chance of drawing 102 or less.” Pull exact cutoffs with the <strong>percentile</strong> function (min = 0th, max = 100th). Same data, two views — and the CDF is often the more useful one for an audience.</p>
+<div class="seealso dropdown admonition">
+<p class="admonition-title">🔗 Notebooks for this chapter</p>
+<ul class="simple">
+<li><p><strong>Intro to Data Science topics</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/1_WelcomeToClass/0_Intro%20to%20Data%20Science%20Topics.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/1_WelcomeToClass/0_Intro%20to%20Data%20Science%20Topics.ipynb">GitHub</a></p></li>
+<li><p><strong>Practical Python programming basics</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/1_WelcomeToClass/1_Practical_Python%20Programming%20Basics.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/1_WelcomeToClass/1_Practical_Python%20Programming%20Basics.ipynb">GitHub</a></p></li>
+<li><p><strong>Introduction to distributions &amp; for loops</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/1_Distributions/1_Introduction%20to%20Distributions%20and%20For%20Loops.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/1_Distributions/1_Introduction%20to%20Distributions%20and%20For%20Loops.ipynb">GitHub</a></p></li>
+<li><p><strong>For loops</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/1_Distributions/2_ForLoops.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/1_Distributions/2_ForLoops.ipynb">GitHub</a></p></li>
+</ul>
+<p><em>Exercises, assignments &amp; extras:</em></p>
+<ul class="simple">
+<li><p><strong>Assignment 1 — selecting data &amp; statistics</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Assignments/Spring%202024/Assignment1_SelectingData/Assignment1_SelectingData_Stats.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Assignments/Spring%202024/Assignment1_SelectingData/Assignment1_SelectingData_Stats.ipynb">GitHub</a></p></li>
+</ul>
+</div>
+</section>
+<section id="lecture-key-points">
+<h2>📌 Lecture key points<a class="headerlink" href="#lecture-key-points" title="Link to this heading">#</a></h2>
+<p><em>Distilled takeaways from the video lectures behind this chapter — click each to expand.</em></p>
+<div class="note dropdown admonition">
+<p class="admonition-title">Welcome to class</p>
+<ul class="simple">
+<li><p><strong>OPIM 3510 = Business Data Analytics I (BDA1)</strong> — the solid <em>data</em> course.</p></li>
+<li><p>Goal: be <strong>data-competent</strong> — read, merge, describe, plot, and run statistics on data.</p></li>
+<li><p>Some modeling, but competence with data is the focus.</p></li>
+<li><p>Built fresh from the ground up.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Welcome to Applied Stats</p>
+<ul class="simple">
+<li><p>A <strong>distribution</strong> is a collection of numbers; <strong>continuous</strong> (any real value) vs. <strong>discrete</strong> (integers/counts).</p></li>
+<li><p>Describe any shape with <strong>percentiles</strong> (10th percentile = 10% of values at or below).</p></li>
+<li><p>Generate with <strong><code class="docutils literal notranslate"><span class="pre">np.random.normal(loc,</span> <span class="pre">scale,</span> <span class="pre">size)</span></code></strong> — watch positional-argument order.</p></li>
+<li><p><strong>Empirical rule</strong>: ~68% within ±1 sd, ~95% within ±2, ~99.7% within ±3; sample means → normal (CLT, next).</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">For loops — simple and nested</p>
+<ul class="simple">
+<li><p>A <strong><code class="docutils literal notranslate"><span class="pre">for</span></code> loop</strong> iterates a set number of operations; <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">my_list</span></code> or <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">np.arange(low,</span> <span class="pre">high,</span> <span class="pre">step)</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">np.arange</span></code> is <em>low, high (excluded), step</em>; <code class="docutils literal notranslate"><span class="pre">for</span></code> is a <strong>reserved word</strong>, loop variable is free (<code class="docutils literal notranslate"><span class="pre">i</span></code>/<code class="docutils literal notranslate"><span class="pre">j</span></code>/<code class="docutils literal notranslate"><span class="pre">x</span></code>).</p></li>
+<li><p><strong>Initialize-and-reuse</strong> pattern powers compound interest (<code class="docutils literal notranslate"><span class="pre">current</span> <span class="pre">*=</span> <span class="pre">1.05</span></code> each year).</p></li>
+<li><p><strong>Nested loops</strong> iterate over two things at once.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Other common distributions</p>
+<ul class="simple">
+<li><p><strong>Triangular</strong> (<code class="docutils literal notranslate"><span class="pre">left,</span> <span class="pre">mode,</span> <span class="pre">right</span></code>) is <strong>censored</strong> at hard limits — good for business “can’t exceed” problems.</p></li>
+<li><p><strong>Uniform</strong> (continuous or integer via <code class="docutils literal notranslate"><span class="pre">randint</span></code>) makes every value in range equally likely.</p></li>
+<li><p><strong>Binomial</strong> (<code class="docutils literal notranslate"><span class="pre">n,</span> <span class="pre">p,</span> <span class="pre">size</span></code>) is the coin-flip distribution (50 flips, p=0.5 → ~25 heads).</p></li>
+<li><p><strong>PDF</strong> shows the shape; <strong>CDF</strong> shows the <strong>percentile</strong> (read “P(≤ x)”); get cutoffs with the percentile function.</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Business Data Analytics I</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="module-2-applied-statistics.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Chapter 2 — Applied Statistics: Sampling, CLT &amp; Confidence Intervals</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#welcome">1.1 Welcome</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distributions">1.2 Distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-loops">1.3 For loops</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-common-distributions">1.4 Other common distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr. Dave Wanik · University of Connecticut (OPIM 3510)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

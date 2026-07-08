@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Chapter 2 — Applied Statistics: Sampling, CLT &amp; Confidence Intervals &#8212; Business Data Analytics I</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'module-2-applied-statistics';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 3 — Data Wrangling: Merge, Joins, Concat &amp; Queries" href="module-3-merge-joins.html" />
+    <link rel="prev" title="Chapter 1 — Foundations: Python, For Loops &amp; Distributions" href="module-1-foundations.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">📈 <strong>OPIM 3510 · Business Data Analytics I</strong> — draft course companion (work in progress)</div>
+</aside>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Business Data Analytics I</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="module-1-foundations.html">Chapter 1 — Foundations: Python, For Loops &amp; Distributions</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 2 — Applied Statistics: Sampling, CLT &amp; Confidence Intervals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-3-merge-joins.html">Chapter 3 — Data Wrangling: Merge, Joins, Concat &amp; Queries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-4-geospatial.html">Chapter 4 — Geospatial Data &amp; Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-5-time-series.html">Chapter 5 — Time Series &amp; Forecasting: Exponential Smoothing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-6-moving-averages.html">Chapter 6 — Moving Averages &amp; Algorithmic Trading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/module-2-applied-statistics.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Chapter 2 — Applied Statistics: Sampling, CLT & Confidence Intervals</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sampling-distribution-of-the-mean">2.1 The sampling distribution of the mean</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-central-limit-theorem">2.2 The Central Limit Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clt-across-distributions">2.3 CLT across distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#point-and-interval-estimates">2.4 Point and interval estimates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ci-when-the-population-is-known">2.5 CI when the population σ is <em>known</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ci-when-the-population-is-unknown">2.6 CI when the population σ is <em>unknown</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ci-for-a-proportion">2.7 CI for a proportion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-2-applied-statistics-sampling-clt-confidence-intervals">
+<h1>Chapter 2 — Applied Statistics: Sampling, CLT &amp; Confidence Intervals<a class="headerlink" href="#chapter-2-applied-statistics-sampling-clt-confidence-intervals" title="Link to this heading">#</a></h1>
+<p>This chapter is the statistical heart of the course. We can’t survey all 3.5 million people in Connecticut, but a <strong>sample</strong> of a few hundred tells us a lot — <em>if</em> we understand the <strong>sampling distribution of the mean</strong>. From it comes the <strong>Central Limit Theorem</strong> (the result that makes inference possible), the <strong>standard error</strong>, and finally <strong>confidence intervals</strong> — turning a single sample into a defensible “we’re 95% sure the answer is between X and Y.”</p>
+<section id="the-sampling-distribution-of-the-mean">
+<h2>2.1 The sampling distribution of the mean<a class="headerlink" href="#the-sampling-distribution-of-the-mean" title="Link to this heading">#</a></h2>
+<p>A <strong>population</strong> is everyone/everything you care about (all UConn students, every car battery off the line); a <strong>sample</strong> is the few you actually measure. Using a 1,000-person height/weight dataset as a stand-in population (mean weight ≈ 161 lb), imagine you can only stop <strong>5 people in an elevator</strong> — one sample gives a mean of 141, the next 129, the next 149… Each is a <strong>sample mean</strong>, and population mean − sample mean is the <strong>sampling error</strong>. Now repeat that “grab 5, take the mean” <strong>100 times</strong> and plot the 100 sample means: they form a <strong>normal distribution</strong> whose center sits right on the population mean (161). That’s the magic — you don’t need all 1,000 people; the <strong>distribution of sample means is normal and centered on the truth</strong>, and it gets tighter as the sample size grows.</p>
+</section>
+<section id="the-central-limit-theorem">
+<h2>2.2 The Central Limit Theorem<a class="headerlink" href="#the-central-limit-theorem" title="Link to this heading">#</a></h2>
+<p>Formally: <strong>if all samples of a given size are drawn from <em>any</em> population, the sampling distribution of the sample mean is approximately normal — and the approximation improves with larger samples.</strong> Normal parent or not. This is what lets us move from <strong>descriptive</strong> statistics (mean, sd) to <strong>inferential</strong> statistics (use a sample to say something about the population).</p>
+<p>The spread of that sampling distribution is the <strong>standard error of the mean</strong>: <strong>SE = σ / √n</strong>. Read the formula like a BDA student — as <strong>n grows, SE shrinks</strong> (toward 0), so more data → a tighter, more confident estimate. Demonstration with a <strong>uniform</strong> (rectangular) parent, mean 200: samples of <strong>n = 2</strong> give a wide, uncertain bell curve; <strong>n = 6</strong> tightens it; <strong>n = 30</strong> is tight around 200 — even though the parent was a rectangle, the sample means are <strong>normal</strong>.</p>
+</section>
+<section id="clt-across-distributions">
+<h2>2.3 CLT across distributions<a class="headerlink" href="#clt-across-distributions" title="Link to this heading">#</a></h2>
+<p>The same holds for <strong>exponential</strong>, <strong>normal</strong>, and <strong>uniform</strong> parents alike: their sampling distributions of the mean are all normal, converging on the true population mean as n rises. With a population mean of 14.98, samples of n=2 give ~13.47, n=6 ~13.98, and <strong>n=30 ~14.99</strong> — which is why <strong>30 is a “magic number”</strong> in statistics: around there, a sample gets you very close. As n → ∞, SE → 0 and the mean-of-means lands essentially on the population mean. Next, we <em>slice</em> this sampling distribution into <strong>confidence intervals</strong>.</p>
+</section>
+<section id="point-and-interval-estimates">
+<h2>2.4 Point and interval estimates<a class="headerlink" href="#point-and-interval-estimates" title="Link to this heading">#</a></h2>
+<p>One sample gives a <strong>point estimate</strong> — e.g. survey 50 UHD-TV buyers, mean age <strong>52.74</strong>. But a point estimate is falsely precise (there’s sampling uncertainty). Better to give an <strong>interval</strong>: “we’re 95% sure the mean age is between 48 and 53.” A <strong>confidence interval</strong> is a range built from sample data such that the population parameter falls inside it at a stated <strong>confidence level</strong>.</p>
+<p>It rests on <strong>z-statistics</strong> from the standard normal (mean 0, sd 1): <strong>95% of sample means lie within 1.96 SE of the population mean</strong> (that’s the familiar “±2 sd”), and 99% within <strong>2.58</strong>. The 2.5% of probability mass in each tail is the CDF you met in Chapter 1. The interval is <strong>x̄ ± z · (σ/√n)</strong> — point estimate plus/minus the margin. Get any z-value from <code class="docutils literal notranslate"><span class="pre">norm.ppf</span></code> (e.g. an 80% CI uses ±1.28).</p>
+</section>
+<section id="ci-when-the-population-is-known">
+<h2>2.5 CI when the population σ is <em>known</em><a class="headerlink" href="#ci-when-the-population-is-known" title="Link to this heading">#</a></h2>
+<p>When σ is known (well-defined manufacturing processes), use <strong>x̄ ± z · σ/√n</strong>. The z-values match the confidence level: 80% → ±1.28 (10% per tail), 94% → ±1.88, 95% → ±1.96, 99% → ±2.58. Example: sample <strong>256</strong> store managers, mean income <strong>$45,420</strong>, known population σ = <strong>$2,050</strong>. The point estimate is $45,420; the 95% CI is $45,420 ± 1.96·(2050/√256) = <strong>± $251</strong> (the <strong>margin of error</strong>). The interval is tight <em>because</em> n is large.</p>
+</section>
+<section id="ci-when-the-population-is-unknown">
+<h2>2.6 CI when the population σ is <em>unknown</em><a class="headerlink" href="#ci-when-the-population-is-unknown" title="Link to this heading">#</a></h2>
+<p>In the messy real world you rarely know σ, so use the <strong>sample</strong> standard deviation and swap <strong>z → t</strong>, with <strong>degrees of freedom = n − 1</strong>. Because you know less, <strong>t-values are larger than z</strong> (95% CI: t ≈ 1.986 vs z = 1.96) — a built-in penalty that <strong>widens</strong> the interval. And <strong>small samples widen it more</strong>: at n=90 the critical t ≈ 1.66, but at n=10 (df=9) it jumps to ≈1.83 (and much more for 99%). Example: 10 tires driven 50,000 miles, mean tread <strong>0.32”</strong>, sample sd <strong>0.09</strong> → compute df=9, the t-value, the margin, and the 95% CI (≈ 0.256”–0.384”). Sensible: ask only 10 people and your interval <em>should</em> be wide.</p>
+</section>
+<section id="ci-for-a-proportion">
+<h2>2.7 CI for a proportion<a class="headerlink" href="#ci-for-a-proportion" title="Link to this heading">#</a></h2>
+<p>Not all data is continuous — sometimes it’s yes/no (who’s voting for A? who likes Python?). The <strong>proportion</strong> p = successes / total, and its CI needs just <strong>p</strong>, <strong>n</strong>, and a <strong>z</strong> critical value: <strong>p ± z · √(p(1−p)/n)</strong>. Example: a union needs <strong>¾ approval</strong> to merge; of <strong>2,000</strong> members, <strong>1,600</strong> (<strong>80%</strong>) plan to vote yes. The 95% CI is 0.80 ± 1.96·(0.0175) = <strong>[0.782, 0.818]</strong>. Since the lower bound (0.782) exceeds the 0.75 threshold, you can be confident the merger passes. Same machinery as the continuous case, applied to binary data.</p>
+<div class="seealso dropdown admonition">
+<p class="admonition-title">🔗 Notebooks for this chapter</p>
+<ul class="simple">
+<li><p><strong>Sampling methods &amp; the CLT</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/1_Distributions/Python_3_Sampling%20Methods%20and%20CLT.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/1_Distributions/Python_3_Sampling%20Methods%20and%20CLT.ipynb">GitHub</a></p></li>
+<li><p><strong>Estimation &amp; confidence intervals</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/1_Python_Estimation_CIs.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/1_Python_Estimation_CIs.ipynb">GitHub</a></p></li>
+</ul>
+<p><em>Exercises, assignments &amp; extras:</em></p>
+<ul class="simple">
+<li><p><strong>Assignment 4 — sampling distributions</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Assignments/Spring%202024/Assignment4_SamplingDistributions/IndividualAssignment_4.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Assignments/Spring%202024/Assignment4_SamplingDistributions/IndividualAssignment_4.ipynb">GitHub</a></p></li>
+</ul>
+</div>
+</section>
+<section id="lecture-key-points">
+<h2>📌 Lecture key points<a class="headerlink" href="#lecture-key-points" title="Link to this heading">#</a></h2>
+<p><em>Distilled takeaways from the video lectures behind this chapter — click each to expand.</em></p>
+<div class="note dropdown admonition">
+<p class="admonition-title">Introduction to sampling distributions of the mean</p>
+<ul class="simple">
+<li><p>You can’t measure a whole <strong>population</strong>, so you take <strong>samples</strong>; sample mean − population mean = <strong>sampling error</strong>.</p></li>
+<li><p>Repeat “draw a sample, take its mean” many times → the <strong>sample means form a normal distribution</strong> centered on the population mean.</p></li>
+<li><p>Larger samples → a <strong>tighter</strong> distribution of means (more confidence).</p></li>
+<li><p>Holds even when the parent distribution is normal — and, as we’ll see, when it isn’t.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Sampling distribution of the mean for a uniform distribution</p>
+<ul class="simple">
+<li><p><strong>CLT:</strong> sample means from <em>any</em> population are approximately normal, improving with n.</p></li>
+<li><p>Enables <strong>inferential</strong> statistics (sample → population claims), beyond descriptive stats.</p></li>
+<li><p><strong>Standard error = σ/√n</strong>; as n grows, SE → 0 (tighter estimate).</p></li>
+<li><p>A <strong>uniform</strong> (rectangular) parent still yields <strong>normal</strong> sample means — wide at n=2, tight by n=30.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Closing thoughts on the central limit theorem</p>
+<ul class="simple">
+<li><p><strong>Exponential, normal, and uniform</strong> parents all give <strong>normal</strong> sampling distributions of the mean.</p></li>
+<li><p>Sample means converge on the true population mean as n rises; <strong>n ≈ 30</strong> gets you close (the “magic number”).</p></li>
+<li><p>As n → ∞, <strong>SE → 0</strong> and the mean-of-means sits on the population mean.</p></li>
+<li><p>Next: slice this distribution into <strong>margins of error and confidence intervals</strong>.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Intro to point and interval estimates</p>
+<ul class="simple">
+<li><p>A single sample gives a <strong>point estimate</strong>; an <strong>interval estimate</strong> adds a confidence level (“95% sure it’s 48–53”).</p></li>
+<li><p>CIs rest on <strong>z-statistics</strong>: 95% of sample means lie within <strong>1.96</strong> SE of the mean (99% within 2.58).</p></li>
+<li><p>Interval = <strong>x̄ ± z · (σ/√n)</strong>; pull any z with <code class="docutils literal notranslate"><span class="pre">norm.ppf</span></code>.</p></li>
+<li><p>You must assume whether the population σ is <strong>known or unknown</strong>.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">CI for when population std dev is known</p>
+<ul class="simple">
+<li><p>Use <strong>x̄ ± z · σ/√n</strong> when σ is known (well-defined processes).</p></li>
+<li><p>z-values by confidence: 80% ±1.28, 94% ±1.88, 95% ±1.96, 99% ±2.58.</p></li>
+<li><p>Example: 256 managers, mean $45,420, σ=$2,050 → 95% CI = ± <strong>$251</strong> (the <strong>margin of error</strong>).</p></li>
+<li><p>A <strong>large n</strong> makes the interval tight.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">CIs for when population std dev is unknown</p>
+<ul class="simple">
+<li><p>Use the <strong>sample</strong> sd and swap <strong>z → t</strong>, with <strong>df = n − 1</strong>.</p></li>
+<li><p><strong>t &gt; z</strong> (95%: ≈1.986 vs 1.96) — a penalty that <strong>widens</strong> the interval because you know less.</p></li>
+<li><p><strong>Small samples widen it more</strong> (n=90 → t≈1.66; n=10 → t≈1.83).</p></li>
+<li><p>Example: 10 tires, mean 0.32”, sd 0.09” → 95% CI ≈ 0.256”–0.384”.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">CIs for a proportion</p>
+<ul class="simple">
+<li><p>For yes/no data, <strong>p = successes/total</strong>; CI = <strong>p ± z · √(p(1−p)/n)</strong>.</p></li>
+<li><p>Needs only <strong>p</strong>, <strong>n</strong>, and a <strong>z</strong> critical value (95% → 1.96).</p></li>
+<li><p>Example: 1,600/2,000 = 80% yes → 95% CI <strong>[0.782, 0.818]</strong>.</p></li>
+<li><p>Lower bound above the 0.75 threshold → confident the merger passes.</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="module-1-foundations.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Chapter 1 — Foundations: Python, For Loops &amp; Distributions</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="module-3-merge-joins.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Chapter 3 — Data Wrangling: Merge, Joins, Concat &amp; Queries</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sampling-distribution-of-the-mean">2.1 The sampling distribution of the mean</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-central-limit-theorem">2.2 The Central Limit Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clt-across-distributions">2.3 CLT across distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#point-and-interval-estimates">2.4 Point and interval estimates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ci-when-the-population-is-known">2.5 CI when the population σ is <em>known</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ci-when-the-population-is-unknown">2.6 CI when the population σ is <em>unknown</em></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ci-for-a-proportion">2.7 CI for a proportion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr. Dave Wanik · University of Connecticut (OPIM 3510)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

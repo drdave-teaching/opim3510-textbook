@@ -1,0 +1,582 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Chapter 5 — Time Series &amp; Forecasting: Exponential Smoothing &#8212; Business Data Analytics I</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'module-5-time-series';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chapter 6 — Moving Averages &amp; Algorithmic Trading" href="module-6-moving-averages.html" />
+    <link rel="prev" title="Chapter 4 — Geospatial Data &amp; Mapping" href="module-4-geospatial.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">📈 <strong>OPIM 3510 · Business Data Analytics I</strong> — draft course companion (work in progress)</div>
+</aside>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Business Data Analytics I</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="module-1-foundations.html">Chapter 1 — Foundations: Python, For Loops &amp; Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-2-applied-statistics.html">Chapter 2 — Applied Statistics: Sampling, CLT &amp; Confidence Intervals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-3-merge-joins.html">Chapter 3 — Data Wrangling: Merge, Joins, Concat &amp; Queries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-4-geospatial.html">Chapter 4 — Geospatial Data &amp; Mapping</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Chapter 5 — Time Series &amp; Forecasting: Exponential Smoothing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module-6-moving-averages.html">Chapter 6 — Moving Averages &amp; Algorithmic Trading</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/module-5-time-series.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Chapter 5 — Time Series & Forecasting: Exponential Smoothing</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-exponential-smoothing">5.1 Introduction to exponential smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation-and-initialization">5.2 Motivation and initialization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-simple-exponential-smoothing-from-scratch">5.3 Building simple exponential smoothing from scratch</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapping-up-simple-exponential-smoothing">5.4 Wrapping up simple exponential smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-double-exponential-smoothing">5.5 Introduction to double exponential smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#double-exponential-smoothing-from-scratch">5.6 Double exponential smoothing from scratch</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-how-your-model-did">5.7 Evaluating how your model did</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-with-grid-search">5.8 Optimization with grid search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="chapter-5-time-series-forecasting-exponential-smoothing">
+<h1>Chapter 5 — Time Series &amp; Forecasting: Exponential Smoothing<a class="headerlink" href="#chapter-5-time-series-forecasting-exponential-smoothing" title="Link to this heading">#</a></h1>
+<p>Time-series forecasting uses the past to predict the future — demand, stock prices, weather. After <strong>moving-average</strong> models (which weight every observation in the window <em>equally</em>), we move to <strong>exponential smoothing</strong>, which weights recent observations more and older ones exponentially less, with a tunable knob <strong>α</strong>. We build <strong>simple</strong> and <strong>double</strong> (trend) exponential smoothing <strong>from scratch</strong> in Python, learn to <strong>evaluate</strong> a forecast honestly (MAE, RMSE, residual plots), and finally <strong>grid-search</strong> the best parameters. These are statistical <em>curve-fitting</em> models, not machine learning — but simple, effective, and a great foundation.</p>
+<section id="introduction-to-exponential-smoothing">
+<h2>5.1 Introduction to exponential smoothing<a class="headerlink" href="#introduction-to-exponential-smoothing" title="Link to this heading">#</a></h2>
+<p>You already know how to plot, resample, forward/back-fill, and derive rates of change (<code class="docutils literal notranslate"><span class="pre">shift</span></code>, <code class="docutils literal notranslate"><span class="pre">diff</span></code>) from time series, and how a <strong>moving average</strong> forecasts from past values — where a longer window (200-day vs. 5-day) smooths out the trend, and where <strong>data leakage</strong> (using future/present info) is a danger. <strong>Exponential smoothing</strong> improves on the moving average by letting you <strong>choose a weight</strong> that decays exponentially into the past: recent info matters most, but the past still informs the forecast. Today’s focus is the <strong>simple</strong> model plus strong <strong>model-evaluation</strong> skills — reading a time series, fitting the model, and judging its fit with scatter plots, actual-vs-predicted lines, and residuals.</p>
+</section>
+<section id="motivation-and-initialization">
+<h2>5.2 Motivation and initialization<a class="headerlink" href="#motivation-and-initialization" title="Link to this heading">#</a></h2>
+<p>Instead of equal weights, exponentially weight recent values and fade the past — which is often better because <strong>outliers and noise have less impact</strong>. The model: <strong>Fₜ = α·Dₜ₋₁ + (1−α)·Fₜ₋₁</strong> — the forecast blends the <strong>most recent observation</strong> (learning something new) with the <strong>previous forecast</strong> (remembering the past), and α + (1−α) = 1. <strong>α</strong> (the smoothing parameter / learning rate, usually 0–0.8) is the knob: <strong>high α</strong> → very responsive to recent data (but jumpy on noise); <strong>low α</strong> → smooth, slow to notice level changes. Why “exponential”? A window-3 moving average gives each of 3 points ⅓ weight, but exponential smoothing weights <em>all</em> history — at α=0.4, yesterday gets 40%, two days ago 24%, three days ago 14%… a smooth <strong>drop-off</strong>. Because there’s no observation before the start, <strong>initialize</strong> the first forecast to the first actual (<code class="docutils literal notranslate"><span class="pre">F₀</span> <span class="pre">=</span> <span class="pre">D₀</span></code>) — “completely phony, but you have to get the party started.”</p>
+</section>
+<section id="building-simple-exponential-smoothing-from-scratch">
+<h2>5.3 Building simple exponential smoothing from scratch<a class="headerlink" href="#building-simple-exponential-smoothing-from-scratch" title="Link to this heading">#</a></h2>
+<p>Because the initial forecast equals the actual, <strong>don’t trust the earliest forecasts</strong> (data leakage) — focus later in the series. Code a function <code class="docutils literal notranslate"><span class="pre">simple_exp_smoothing(D,</span> <span class="pre">extra_periods,</span> <span class="pre">alpha)</span></code>: convert <code class="docutils literal notranslate"><span class="pre">D</span></code> to a <strong>NumPy array</strong> (fast, list-like), get its length, append <code class="docutils literal notranslate"><span class="pre">np.nan</span></code> for the forecast horizon, make a forecast array with <strong><code class="docutils literal notranslate"><span class="pre">np.full(...,</span> <span class="pre">np.nan)</span></code></strong>, set <code class="docutils literal notranslate"><span class="pre">F[0]</span> <span class="pre">=</span> <span class="pre">D[0]</span></code>, then loop <strong><code class="docutils literal notranslate"><span class="pre">F[t]</span> <span class="pre">=</span> <span class="pre">α·D[t-1]</span> <span class="pre">+</span> <span class="pre">(1-α)·F[t-1]</span></code></strong>. Future periods just <strong>repeat the last value</strong> (these models don’t extrapolate). Return a DataFrame of demand, forecast, and error (actual − predicted). Tune <strong>α</strong>: 0.4–0.5 looks sharp; too low is clunky (a long warm-up); <strong>α ≈ 0.99 collapses to a moving average of window 1</strong>. On a 21-point series with 4 forecast periods, the output has 25 rows. (Stats-models/scikit-learn have canned versions, but coding your own reveals what it does — and impresses in a whiteboard interview.)</p>
+</section>
+<section id="wrapping-up-simple-exponential-smoothing">
+<h2>5.4 Wrapping up simple exponential smoothing<a class="headerlink" href="#wrapping-up-simple-exponential-smoothing" title="Link to this heading">#</a></h2>
+<p>Comparing <strong>α = 0.1</strong> (smooth, orange) vs. <strong>α = 0.8</strong> (bumpy) shows the trade-off; both need a warm-up. Why “exponential”? Expand the recursion — Fₜ₋₁ itself expands into Dₜ₋₂ and Fₜ₋₂, and so on — so <strong>the forecast is a function of <em>all</em> past observations and forecasts</strong>, with α controlling the emphasis. As α → 1, you use only the most recent value (a window-1 moving average). <strong>Limitations:</strong> future forecasts are a <strong>flat constant</strong> (the last fitted value repeated) — the model <strong>can’t capture trend</strong> (need <strong>double</strong> exponential smoothing), <strong>can’t capture seasonality</strong> (need <strong>triple</strong> — e.g. winter-coat sales), and <strong>can’t use external drivers</strong> like price/marketing (that’s regression). The author calls simple ES possibly “too simple,” but as we’ve seen, <strong>simple is often effective</strong> — it’s how you use and evaluate it that adds value.</p>
+</section>
+<section id="introduction-to-double-exponential-smoothing">
+<h2>5.5 Introduction to double exponential smoothing<a class="headerlink" href="#introduction-to-double-exponential-smoothing" title="Link to this heading">#</a></h2>
+<p>Add <strong>trend</strong>. Beyond α (level), introduce <strong>β</strong> (trend), so the <strong>forecast = level + trend</strong>. Level looks familiar: <strong>level = α·Dₜ + (1−α)·(prev level + prev trend)</strong>; <strong>trend = β·(current − previous change) + (1−β)·(prev trend)</strong>. For a horizon λ, <strong>Fₜ₊λ = level + λ·trend</strong> — so unlike simple ES, double ES <strong>extrapolates a slope into the future</strong>. Initialize <strong>level = D₀</strong> and <strong>trend = D₁ − D₀</strong> (so the first forecast is perfect, then degrades). Tuning α vs. β changes how the fit tracks level vs. trend. The catch: it just keeps <strong>adding a constant trend forever</strong>, so it loses value over long horizons.</p>
+</section>
+<section id="double-exponential-smoothing-from-scratch">
+<h2>5.6 Double exponential smoothing from scratch<a class="headerlink" href="#double-exponential-smoothing-from-scratch" title="Link to this heading">#</a></h2>
+<p>In Python, keep three NaN-filled arrays — <strong>level <code class="docutils literal notranslate"><span class="pre">A</span></code></strong>, <strong>trend <code class="docutils literal notranslate"><span class="pre">B</span></code></strong>, <strong>forecast <code class="docutils literal notranslate"><span class="pre">F</span></code></strong> — each length + extra periods. Initialize <code class="docutils literal notranslate"><span class="pre">A[0]</span> <span class="pre">=</span> <span class="pre">D[0]</span></code>, <code class="docutils literal notranslate"><span class="pre">B[0]</span> <span class="pre">=</span> <span class="pre">D[1]</span> <span class="pre">−</span> <span class="pre">D[0]</span></code>. Loop: forecast <code class="docutils literal notranslate"><span class="pre">F[t]</span> <span class="pre">=</span> <span class="pre">A[t-1]</span> <span class="pre">+</span> <span class="pre">B[t-1]</span></code>, then <strong>update level</strong> <code class="docutils literal notranslate"><span class="pre">A[t]</span> <span class="pre">=</span> <span class="pre">α·D[t-1]</span> <span class="pre">+</span> <span class="pre">(1-α)·(A[t-1]</span> <span class="pre">+</span> <span class="pre">B[t-1])</span></code> and <strong>update trend</strong> <code class="docutils literal notranslate"><span class="pre">B[t]</span> <span class="pre">=</span> <span class="pre">β·(A[t]</span> <span class="pre">−</span> <span class="pre">A[t-1])</span> <span class="pre">+</span> <span class="pre">(1-β)·B[t-1]</span></code>. The future forecast carries the last trend forward (e.g. subtracting 5.24 or 0.55 each step) — which <strong>breaks</strong> over a long horizon (try <code class="docutils literal notranslate"><span class="pre">extra_periods=15</span></code> and watch it run away). So it’s good for <strong>short horizons</strong>. Next: find the best α, β automatically — and evaluate with metrics, scatter, line, and histogram plots throughout.</p>
+</section>
+<section id="evaluating-how-your-model-did">
+<h2>5.7 Evaluating how your model did<a class="headerlink" href="#evaluating-how-your-model-did" title="Link to this heading">#</a></h2>
+<p>The output DataFrame has actual, forecast, and <strong>error = actual − predicted</strong> (a <strong>residual</strong>: overestimates read <em>negative</em>, underestimates <em>positive</em> — Dr. Dave prefers <strong>predicted − actual</strong> so the sign matches the direction; either is fine as long as you <strong>tell your audience</strong> which). Metrics coded from scratch: <strong>MAE</strong> (mean absolute error — average miss in the problem’s units, e.g. “off by 3.06 laptops,” direction-free) and <strong>RMSE</strong> (squares errors to <strong>penalize outliers</strong>). Then <strong>plot</strong>: an <strong>actual-vs-predicted scatter</strong> (drop NaNs first; add a 45° line; set matching x/y limits), a <strong>residual histogram</strong> (is the model biased?), and an <strong>error-vs-time line</strong> (with a horizontal 0 line — is there a <em>pattern</em> to over/under-estimation?). Because early forecasts are warm-up, consider <strong>chopping the start</strong> before presenting to management. Slicing and plotting like this is far cleaner than tinkering with Excel ranges.</p>
+</section>
+<section id="optimization-with-grid-search">
+<h2>5.8 Optimization with grid search<a class="headerlink" href="#optimization-with-grid-search" title="Link to this heading">#</a></h2>
+<p>Rather than hand-tuning, <strong>grid-search</strong> α (and β). Use <strong><code class="docutils literal notranslate"><span class="pre">np.argmin</span></code></strong> to find the position of the minimum error. Build empty lists for parameters, KPIs (error metrics), and outputs, then a <strong>nested for loop</strong> — outer over α (0.05→0.8, step 0.01), inner over β — fitting the model at each combination and storing α, β, and MAE. (75 × 75 ≈ <strong>5,625 models</strong> — slow but thorough; add <code class="docutils literal notranslate"><span class="pre">print</span></code> statements to <em>see</em> the nesting if it’s confusing.) Then <code class="docutils literal notranslate"><span class="pre">np.argmin(MAE)</span></code> returns the position of the best model, and you report the winning α/β and its error. For the textbook example, the best was <strong>simple</strong> smoothing, <strong>α = 0.4, MAE = 2.74</strong> (or 0.41 with the finer grid). You can optimize on <strong>MAE or RMSE</strong> — no wrong answer, it depends on the business problem. You now have real time-series modeling chops to complement the machine learning you’ll meet in later courses.</p>
+<div class="seealso dropdown admonition">
+<p class="admonition-title">🔗 Notebooks for this chapter</p>
+<ul class="simple">
+<li><p><strong>EDA on financial time series</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/1_TimeSeriesData/2_EDA_TimeSeries_Financial.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/1_TimeSeriesData/2_EDA_TimeSeries_Financial.ipynb">GitHub</a></p></li>
+<li><p><strong>Missing data — weather time series</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/1_TimeSeriesData/3_Missing_Data_Weather.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/1_TimeSeriesData/3_Missing_Data_Weather.ipynb">GitHub</a></p></li>
+<li><p><strong>Simple exponential smoothing from scratch</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/3_Exponential%20Smoothing%20and%20Optimization/Intro_ExponentialSmoothing.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/3_Exponential%20Smoothing%20and%20Optimization/Intro_ExponentialSmoothing.ipynb">GitHub</a></p></li>
+<li><p><strong>Double exponential smoothing</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/3_Exponential%20Smoothing%20and%20Optimization/DoubleExponentialSmoothing.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/3_Exponential%20Smoothing%20and%20Optimization/DoubleExponentialSmoothing.ipynb">GitHub</a></p></li>
+<li><p><strong>Grid-search optimization of alpha/beta</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/3_Exponential%20Smoothing%20and%20Optimization/Optimization_ExponentialSmoothing.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/3_Exponential%20Smoothing%20and%20Optimization/Optimization_ExponentialSmoothing.ipynb">GitHub</a></p></li>
+<li><p><strong>Exponential smoothing with statsmodels</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/3_Exponential%20Smoothing%20and%20Optimization/statsmodels_exponentialSmoothing.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/3_Exponential%20Smoothing%20and%20Optimization/statsmodels_exponentialSmoothing.ipynb">GitHub</a></p></li>
+</ul>
+<p><em>Exercises, assignments &amp; extras:</em></p>
+<ul class="simple">
+<li><p><strong>Project — oil prices &amp; exponential smoothing</strong>   <a class="reference external" href="https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/4_PuttingItAllTogether/Project_OilPrices_ExpSmoothing.ipynb"><img alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a>   <a class="reference external" href="https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/4_PuttingItAllTogether/Project_OilPrices_ExpSmoothing.ipynb">GitHub</a></p></li>
+</ul>
+</div>
+</section>
+<section id="lecture-key-points">
+<h2>📌 Lecture key points<a class="headerlink" href="#lecture-key-points" title="Link to this heading">#</a></h2>
+<p><em>Distilled takeaways from the video lectures behind this chapter — click each to expand.</em></p>
+<div class="note dropdown admonition">
+<p class="admonition-title">Introduction to Exponential Smoothing</p>
+<ul class="simple">
+<li><p>Time-series forecasting uses the past to predict the future (demand, stocks, weather); beware <strong>data leakage</strong>.</p></li>
+<li><p><strong>Moving averages</strong> weight the window equally; a longer window smooths the trend.</p></li>
+<li><p><strong>Exponential smoothing</strong> weights recent data more, fading the past <strong>exponentially</strong>, via a tunable <strong>α</strong>.</p></li>
+<li><p>These are statistical <strong>curve-fitting</strong> models (not ML); the skill is fitting <em>and</em> <strong>evaluating</strong> them.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Motivation and initialization of Simple Exponential Smoothing</p>
+<ul class="simple">
+<li><p><strong>Fₜ = α·Dₜ₋₁ + (1−α)·Fₜ₋₁</strong> — blend the newest observation (learn) with the last forecast (remember).</p></li>
+<li><p><strong>α</strong> (0–0.8): high → responsive but jumpy; low → smooth but slow; weights <strong>drop off</strong> exponentially.</p></li>
+<li><p>Reduces the impact of outliers/noise vs. a plain moving average.</p></li>
+<li><p><strong>Initialize</strong> <code class="docutils literal notranslate"><span class="pre">F₀</span> <span class="pre">=</span> <span class="pre">D₀</span></code> (phony but necessary to start).</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Building the simple exponential smoothing model from scratch (and playing with alpha)</p>
+<ul class="simple">
+<li><p><strong>Don’t trust the earliest forecasts</strong> (initialized to the actual = leakage) — focus later in the series.</p></li>
+<li><p>Code <code class="docutils literal notranslate"><span class="pre">simple_exp_smoothing(D,</span> <span class="pre">extra_periods,</span> <span class="pre">α)</span></code> with a <strong>NumPy array</strong>, <code class="docutils literal notranslate"><span class="pre">np.full(...,</span> <span class="pre">nan)</span></code>, and the update loop.</p></li>
+<li><p>Future periods <strong>repeat the last value</strong> (no extrapolation); return demand/forecast/error.</p></li>
+<li><p>α ≈ 0.4–0.5 is sharp; <strong>α ≈ 0.99 collapses to a moving average</strong>.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Wrapping up Simple Exponential Smoothing</p>
+<ul class="simple">
+<li><p>Expanding the recursion shows the forecast weights <strong>all</strong> past observations — hence “exponential.”</p></li>
+<li><p>As <strong>α → 1</strong>, it’s a window-1 moving average.</p></li>
+<li><p><strong>Limitations:</strong> flat constant future forecast — <strong>no trend</strong> (need double ES), <strong>no seasonality</strong> (triple), <strong>no external drivers</strong>.</p></li>
+<li><p>Simple isn’t bad — <strong>evaluation</strong> is what adds value.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Introduction to Double Exponential Smoothing</p>
+<ul class="simple">
+<li><p>Adds <strong>trend</strong> via <strong>β</strong>: <strong>forecast = level + trend</strong>, with <strong>Fₜ₊λ = level + λ·trend</strong> (extrapolates a slope).</p></li>
+<li><p>Level = α·Dₜ + (1−α)·(prev level + trend); trend = β·(change) + (1−β)·(prev trend).</p></li>
+<li><p>Initialize <strong>level = D₀</strong>, <strong>trend = D₁ − D₀</strong> (first forecast perfect, then degrades).</p></li>
+<li><p>Adds a <strong>constant trend forever</strong>, so it loses value over long horizons.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Double exponential smoothing from scratch</p>
+<ul class="simple">
+<li><p>Keep three NaN arrays — <strong>level <code class="docutils literal notranslate"><span class="pre">A</span></code></strong>, <strong>trend <code class="docutils literal notranslate"><span class="pre">B</span></code></strong>, <strong>forecast <code class="docutils literal notranslate"><span class="pre">F</span></code></strong>.</p></li>
+<li><p>Update level <code class="docutils literal notranslate"><span class="pre">A[t]</span> <span class="pre">=</span> <span class="pre">α·D[t-1]</span> <span class="pre">+</span> <span class="pre">(1-α)·(A[t-1]+B[t-1])</span></code>; update trend <code class="docutils literal notranslate"><span class="pre">B[t]</span> <span class="pre">=</span> <span class="pre">β·(A[t]-A[t-1])</span> <span class="pre">+</span> <span class="pre">(1-β)·B[t-1]</span></code>.</p></li>
+<li><p>The future carries the <strong>last trend</strong> forward — it <strong>breaks</strong> over a long horizon (<code class="docutils literal notranslate"><span class="pre">extra_periods=15</span></code>).</p></li>
+<li><p>Good for <strong>short</strong> forecast horizons.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Evaluating how your model did</p>
+<ul class="simple">
+<li><p><strong>error = actual − predicted</strong> (a residual; overestimate = negative) — state your <strong>sign convention</strong> to the audience.</p></li>
+<li><p><strong>MAE</strong> = average miss in problem units (direction-free); <strong>RMSE</strong> squares errors to penalize outliers.</p></li>
+<li><p>Plot <strong>actual-vs-predicted</strong> (drop NaNs, add a 45° line, matching limits), a <strong>residual histogram</strong>, and <strong>error-vs-time</strong>.</p></li>
+<li><p>Early forecasts are warm-up — consider <strong>chopping the start</strong> before presenting.</p></li>
+</ul>
+</div>
+<div class="note dropdown admonition">
+<p class="admonition-title">Optimization with grid search</p>
+<ul class="simple">
+<li><p>Grid-search α (and β) instead of hand-tuning; <strong><code class="docutils literal notranslate"><span class="pre">np.argmin</span></code></strong> finds the minimum-error position.</p></li>
+<li><p>A <strong>nested for loop</strong> over α × β (0.05→0.8, step 0.01) fits ~5,625 models and stores each MAE.</p></li>
+<li><p>Report the winning α/β and error (textbook: simple ES, α=0.4, MAE=2.74).</p></li>
+<li><p>Optimize on <strong>MAE or RMSE</strong> — depends on the business problem.</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="module-4-geospatial.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Chapter 4 — Geospatial Data &amp; Mapping</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="module-6-moving-averages.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Chapter 6 — Moving Averages &amp; Algorithmic Trading</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-exponential-smoothing">5.1 Introduction to exponential smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation-and-initialization">5.2 Motivation and initialization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-simple-exponential-smoothing-from-scratch">5.3 Building simple exponential smoothing from scratch</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapping-up-simple-exponential-smoothing">5.4 Wrapping up simple exponential smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-double-exponential-smoothing">5.5 Introduction to double exponential smoothing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#double-exponential-smoothing-from-scratch">5.6 Double exponential smoothing from scratch</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-how-your-model-did">5.7 Evaluating how your model did</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-with-grid-search">5.8 Optimization with grid search</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lecture-key-points">📌 Lecture key points</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr. Dave Wanik · University of Connecticut (OPIM 3510)
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
