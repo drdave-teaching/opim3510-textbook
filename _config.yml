@@ -1,4 +1,4 @@
-title: "Introduction to Data Science"
+title: "Business Data Analytics I"
 author: "Dr. Dave Wanik · University of Connecticut (OPIM 3510)"
 only_build_toc_files: true
 execute:
@@ -8,7 +8,7 @@ html:
   home_page_in_navbar: true
   extra_footer: |
     <p style="font-size:0.9em;opacity:0.85"><strong>⚠️ Work in progress.</strong> These are living draft materials — actively being written and revised. Many lecture narratives are still being filled in from transcripts. This is a teaching companion, not a final or official reference.</p>
-    <p><em>OPIM 3510 — Introduction to Data Science. A hands-on, Python/Colab course. Built from Dr. Wanik's lecture videos and Google Colab notebooks.</em></p>
+    <p><em>OPIM 3510 — Business Data Analytics I: Data Storytelling, Applied Stats &amp; Geospatial. A hands-on, Python/Colab course. Built from Dr. Wanik's lecture videos and Google Colab notebooks.</em></p>
 repository:
   url: https://github.com/drdave-teaching/opim3510-textbook
   branch: main
@@ -22,7 +22,7 @@ sphinx:
   config:
     html_show_copyright: false
     html_theme_options:
-      announcement: "📈 <strong>OPIM 3510 · Introduction to Data Science</strong> — draft course companion (work in progress)"
+      announcement: "📈 <strong>OPIM 3510 · Business Data Analytics I</strong> — draft course companion (work in progress)"
     mathjax3_config:
       tex:
         inlineMath: [['$', '$']]

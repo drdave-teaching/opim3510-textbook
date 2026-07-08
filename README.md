@@ -1,4 +1,4 @@
-# OPIM 3510 — Introduction to Data Science (book)
+# OPIM 3510 — Business Data Analytics I: Data Storytelling, Applied Stats & Geospatial (book)
 
 The hands-on companion to **OPIM 3510** — Dr. Dave Wanik, University of Connecticut.
 Built from the lecture videos and Google Colab (Python) notebooks. **Work in progress:**

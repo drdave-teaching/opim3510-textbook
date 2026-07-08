@@ -4,12 +4,12 @@
 <rect x="0" y="0" width="9" height="118" rx="4.5" fill="#881337"/>
 <text x="848" y="96" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="86" font-weight="700" fill="#FB7185" opacity="0.45">3510</text>
 <text x="40" y="50" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="700" fill="#ffffff">OPIM 3510</text>
-<text x="42" y="78" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#FFE4E6">Introduction to Data Science</text>
+<text x="42" y="78" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="400" fill="#FFE4E6">Data Storytelling, Applied Stats &amp; Geospatial</text>
 <text x="42" y="103" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" fill="#ffffff">Dr. Dave Wanik</text>
 <text x="158" y="103" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="400" fill="#FFE4E6">· University of Connecticut</text>
 </svg>
 
-# Introduction to Data Science
+# Business Data Analytics I
 ### A hands-on course companion — OPIM 3510
 
 *by Dave Wanik · University of Connecticut*
