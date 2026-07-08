@@ -34,6 +34,17 @@ In the messy real world you rarely know σ, so use the **sample** standard devia
 
 Not all data is continuous — sometimes it's yes/no (who's voting for A? who likes Python?). The **proportion** p = successes / total, and its CI needs just **p**, **n**, and a **z** critical value: **p ± z · √(p(1−p)/n)**. Example: a union needs **¾ approval** to merge; of **2,000** members, **1,600** (**80%**) plan to vote yes. The 95% CI is 0.80 ± 1.96·(0.0175) = **[0.782, 0.818]**. Since the lower bound (0.782) exceeds the 0.75 threshold, you can be confident the merger passes. Same machinery as the continuous case, applied to binary data.
 
+:::{admonition} 🔗 Notebooks for this chapter
+:class: seealso dropdown
+
+- **Sampling methods & the CLT** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/1_Distributions/Python_3_Sampling%20Methods%20and%20CLT.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/1_Distributions/Python_3_Sampling%20Methods%20and%20CLT.ipynb)
+- **Estimation & confidence intervals** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/1_Python_Estimation_CIs.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/1_Python_Estimation_CIs.ipynb)
+
+*Exercises, assignments & extras:*
+
+- **Assignment 4 — sampling distributions** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Assignments/Spring%202024/Assignment4_SamplingDistributions/IndividualAssignment_4.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Assignments/Spring%202024/Assignment4_SamplingDistributions/IndividualAssignment_4.ipynb)
+:::
+
 ## 📌 Lecture key points
 
 *Distilled takeaways from the video lectures behind this chapter — click each to expand.*

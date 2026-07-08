@@ -31,6 +31,19 @@ Beyond the normal (a **parametric** distribution set by mean + sd), a few more y
 
 Finally, **PDF vs. CDF**. The **PDF** (what a KDE/histogram shows) is the *shape* — you can see it's normal, but the y-axis is frequency, so you can't read "P(≤ 104)". The **CDF** (cumulative) plots the **percentile** on the y-axis, so you *can*: "90% chance of drawing 102 or less." Pull exact cutoffs with the **percentile** function (min = 0th, max = 100th). Same data, two views — and the CDF is often the more useful one for an audience.
 
+:::{admonition} 🔗 Notebooks for this chapter
+:class: seealso dropdown
+
+- **Intro to Data Science topics** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/1_WelcomeToClass/0_Intro%20to%20Data%20Science%20Topics.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/1_WelcomeToClass/0_Intro%20to%20Data%20Science%20Topics.ipynb)
+- **Practical Python programming basics** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/1_WelcomeToClass/1_Practical_Python%20Programming%20Basics.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/1_WelcomeToClass/1_Practical_Python%20Programming%20Basics.ipynb)
+- **Introduction to distributions & for loops** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/1_Distributions/1_Introduction%20to%20Distributions%20and%20For%20Loops.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/1_Distributions/1_Introduction%20to%20Distributions%20and%20For%20Loops.ipynb)
+- **For loops** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/1_Distributions/2_ForLoops.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/1_Distributions/2_ForLoops.ipynb)
+
+*Exercises, assignments & extras:*
+
+- **Assignment 1 — selecting data & statistics** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Assignments/Spring%202024/Assignment1_SelectingData/Assignment1_SelectingData_Stats.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Assignments/Spring%202024/Assignment1_SelectingData/Assignment1_SelectingData_Stats.ipynb)
+:::
+
 ## 📌 Lecture key points
 
 *Distilled takeaways from the video lectures behind this chapter — click each to expand.*

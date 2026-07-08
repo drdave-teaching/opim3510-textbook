@@ -45,6 +45,19 @@ The honest punchline: for GLD, **buy-and-hold grew ~32–38%**, while the **9/21
 
 Completing BDA1, you are **data-competent**: you can read, clean, merge, and describe data; resample and forecast time series; understand where statistical numbers (margins of error, confidence intervals) come from; and display data visually with points, lines, and polygons — even joining CSVs to polygons. The natural next question is *what do I do with all this data?* That's **modeling** — predicting an outcome from your features. A quick teaser: pull CT-data tables (educational attainment, per-capita income, home sales), reshape long→wide, `merge` them into one clean frame, and fit a **decision-tree regressor** in a few lines to predict **per-capita income** — reaching an **R² ≈ 0.92** (off by ~\$3,000 on average). Trees are transparent: you can **plot the tree** to see its decisions and read off **feature importance** (college attainment is a strong driver). But easy-to-run code hides real theory — *knowing what to do when* is the whole point of the next course, **BDA2**. You've built the foundation; now go make something useful with it.
 
+:::{admonition} 🔗 Notebooks for this chapter
+:class: seealso dropdown
+
+- **Moving average model from scratch** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/2_MovingAverageModel/Intro_MovingAverage.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/2_MovingAverageModel/Intro_MovingAverage.ipynb)
+- **Exploring oil prices** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/2_MovingAverageModel/ExploringOil.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/2_MovingAverageModel/ExploringOil.ipynb)
+- **Momentum trading algorithm** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/2_MovingAverageModel/MomentumTrading.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module2_TimeSeriesForecasting/2_MovingAverageModel/MomentumTrading.ipynb)
+- **Exploring CT data with ML models (BDA2 teaser)** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/4_Exploring%20CT%20Data_MLmodels.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/4_Exploring%20CT%20Data_MLmodels.ipynb)
+
+*Exercises, assignments & extras:*
+
+- **Assignment 3 — moving average HW** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Assignments/Spring%202024/Assignment3_TimeSeriesModels/MovingAverageHW.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Assignments/Spring%202024/Assignment3_TimeSeriesModels/MovingAverageHW.ipynb)
+:::
+
 ## 📌 Lecture key points
 
 *Distilled takeaways from the video lectures behind this chapter — click each to expand.*

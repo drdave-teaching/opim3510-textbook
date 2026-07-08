@@ -39,6 +39,24 @@ Once data is combined, you **query** it. Using a "Facebook" student dataset (id,
 
 A real-world Excel gotcha: messy files put titles/notes in the top rows, so **`pd.read_excel(path, skiprows=2)`** (and `read_excel`, not `read_csv`, for `.xlsx`). Python's advantage is **transparency** — everything is laid out and re-runnable, and the recipe transfers to new data with small tweaks, whereas a stray edit in an Excel formula can silently corrupt results.
 
+:::{admonition} 🔗 Notebooks for this chapter
+:class: seealso dropdown
+
+- **Data types, tables, wrangling & statistics** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/2_Tables/2_DataTypes_Tables_Wrangling%20and%20Statistics.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/2_Tables/2_DataTypes_Tables_Wrangling%20and%20Statistics.ipynb)
+- **pandas merge, join & concat** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/4_Queries_DataJoining/materials-introduction-combining-data-pandas-merge-join-and-concat/pandas_merge_concat.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/4_Queries_DataJoining/materials-introduction-combining-data-pandas-merge-join-and-concat/pandas_merge_concat.ipynb)
+- **Join practice (weather data)** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/4_Queries_DataJoining/Week4_JoinPractice.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/4_Queries_DataJoining/Week4_JoinPractice.ipynb)
+- **Facebook — business queries** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/4_Queries_DataJoining/Facebook.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/4_Queries_DataJoining/Facebook.ipynb)
+- **Greek restaurant — queries** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/4_Queries_DataJoining/GreekRestaurant.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/4_Queries_DataJoining/GreekRestaurant.ipynb)
+
+*Exercises, assignments & extras:*
+
+- **General EDA template** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/3_Charts/0_General_EDA_Template.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/3_Charts/0_General_EDA_Template.ipynb)
+- **EDA template — CA Housing (blank)** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/3_Charts/1_General_EDA_Template_CAHousing_blank.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/3_Charts/1_General_EDA_Template_CAHousing_blank.ipynb)
+- **Charts gallery** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/3_Charts/obs/Charts.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/3_Charts/obs/Charts.ipynb)
+- **Project 1 — EDA** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/5_Project/Project_BDA1_EDA.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module1_EDA/5_Project/Project_BDA1_EDA.ipynb)
+- **Assignment 2 — EDA** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Assignments/Spring%202024/Assignment2_EDA/Assignment2_EDA.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Assignments/Spring%202024/Assignment2_EDA/Assignment2_EDA.ipynb)
+:::
+
 ## 📌 Lecture key points
 
 *Distilled takeaways from the video lectures behind this chapter — click each to expand.*

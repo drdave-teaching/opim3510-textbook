@@ -40,6 +40,23 @@ Finally, go the other way — **resample** high-resolution data to a coarser uni
 
 **Crash course complete:** vector data (points/lines/polygons), reading shapefiles and making colored maps, geocoding addresses to points, spatial joins to enrich points from polygons, joining CSVs and census data, and resampling across resolutions. You can now make your own maps and say something interesting about spatial patterns in Connecticut.
 
+:::{admonition} 🔗 Notebooks for this chapter
+:class: seealso dropdown
+
+- **Intro to geospatial data types** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/2_Intro%20to%20Geospatial%20Data%20Types.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/2_Intro%20to%20Geospatial%20Data%20Types.ipynb)
+- **Making maps with polygons** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/3_Intro%20to%20Making%20Maps_Polygons.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/3_Intro%20to%20Making%20Maps_Polygons.ipynb)
+- **Geocoding & spatial joins** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/1_Geocoding%20and%20Spatial%20Joins.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/1_Geocoding%20and%20Spatial%20Joins.ipynb)
+- **CT data joining & maps** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/4_CT_Data_Joining_Maps.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/2_SamplingDistributions_CI/4_CT_Data_Joining_Maps.ipynb)
+- **Census data enrichment** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/2_Data%20Enrichment.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/2_Data%20Enrichment.ipynb)
+- **Resampling zip codes to towns** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/3_ResamplingZipcodes_to_Towns.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/3_ResamplingZipcodes_to_Towns.ipynb)
+
+*Exercises, assignments & extras:*
+
+- **Centroids** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/Centroids.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/Centroids.ipynb)
+- **Advanced — spatial analytics & GeoPandas** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/obs/4_advanced_Spatial%20Analytics%20and%20Geopandas.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/3_Geospatial/obs/4_advanced_Spatial%20Analytics%20and%20Geopandas.ipynb)
+- **Project 3 — instructions** &nbsp; [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/4_Putting_It_Together/Project3_Instructions.ipynb) &nbsp; [GitHub](https://github.com/drdave-teaching/OPIM3510-notebooks/blob/master/Module3_Stats_Geospatial/4_Putting_It_Together/Project3_Instructions.ipynb)
+:::
+
 ## 📌 Lecture key points
 
 *Distilled takeaways from the video lectures behind this chapter — click each to expand.*
